@@ -1,0 +1,17 @@
+# All top-level parameters for benchmarking and sweeps
+
+hw:
+    - single-cluster.hjson
+    - full.hjson
+
+sw:
+    - name: axpy
+      config: 'axpy/config.hjson'
+      sweep:
+        n: [24, 48, 100]
+        method: ['baseline', 'optimized']
+    - name: gemm
+      config: 'gemm/config.hjson'
+      sweep:
+        n: 'np.linspace(10, 100, num=4, dtype=int).tolist()'
+        method: ['baseline', 'optimized']

@@ -15,3 +15,6 @@ transcript
 
 gmon.out
 .ipynb_checkpoints
+site/
+work.lib++/
+target/sim/gemm_results.csv

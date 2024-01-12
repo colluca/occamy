@@ -240,7 +240,7 @@ test/testharness.sv: test/testharness.sv.tpl $(CFG)
 # 	@echo "[SOLDER] Device Tree"
 # 	@$(OCCAMYGEN) --cfg $(CFG) --outdir . --dts test/occamy.dts
 
-$(TARGET_PLIC_DIR) $(TARGET_CLINT_DIR) $(TARGET_SOCCTRL_DIR) $(TARGET_HBMCTRL_DIR) $(TARGET_QUADCTRL_DIR):
+$(TARGET_PLIC_DIR) $(TARGET_CLINT_DIR) $(TARGET_SOCCTRL_DIR) $(TARGET_HBMCTRL_DIR) $(TARGET_QUADCTRL_DIR) ${VSIM_BUILDDIR} ${LOGS_DIR}:
 	@mkdir -p $@
 
 CLINTROOT = $(shell $(BENDER) path clint)
@@ -426,7 +426,7 @@ PLATFORM_HEADERS += $(PLATFORM_HEADERS_DIR)/snitch_hbm_xbar_peripheral.h
 
 .PHONY: sw clean-headers clean-sw
 
-sw: $(PLATFORM_HEADERS)
+sw: $(PLATFORM_HEADERS) | ${LOGS_DIR}
 	$(MAKE) -C sw/ all
 
 clean-headers:
@@ -529,7 +529,7 @@ ${VSIM_BUILDDIR}/compile.vsim.tcl: $(VSIM_SOURCES) ${TB_SRCS} ${TB_CC_SOURCES} t
 	echo 'return 0' >> $@
 
 # Build compilation script and compile all sources for Questasim simulation
-$(BIN_DIR)/occamy_top.vsim: ${VSIM_BUILDDIR}/compile.vsim.tcl work/lib/libfesvr.a
+$(BIN_DIR)/occamy_top.vsim: ${VSIM_BUILDDIR}/compile.vsim.tcl work/lib/libfesvr.a | ${VSIM_BUILDDIR}
 	$(call QUESTASIM,tb_bin)
 	@# Rename CVA6 trace to align with Snitch trace names
 	@echo "mv ${CVA6_TRACE} $(LOGS_DIR)/trace_hart_00000.txt" >> $@

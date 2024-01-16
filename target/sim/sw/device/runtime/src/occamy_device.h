@@ -6,6 +6,20 @@
 
 typedef enum { SYNC_ALL, SYNC_CLUSTERS, SYNC_NONE } sync_t;
 
+inline void ocrt_compute_thread_num(uint32_t* tnum) {
+    tnum[0] = SNRT_CLUSTER_CORE_NUM - SNRT_CLUSTER_DM_CORE_NUM;
+    tnum[1] = N_CLUSTERS_PER_QUAD;
+    tnum[2] = N_QUADS;
+}
+
+inline void ocrt_thread_idx(uint32_t* tid) {
+    const uint32_t tidg = snrt_global_core_idx();
+    
+    tid[0] = tidg % SNRT_CLUSTER_CORE_NUM;
+    tid[1] = tidg / SNRT_CLUSTER_CORE_NUM % N_CLUSTERS_PER_QUAD;
+    tid[2] = tidg / SNRT_CLUSTER_CORE_NUM / N_CLUSTERS_PER_QUAD;
+}
+
 inline uint32_t __attribute__((const)) snrt_quadrant_idx() {
     return snrt_cluster_idx() / N_CLUSTERS_PER_QUAD;
 }

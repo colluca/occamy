@@ -1,0 +1,21 @@
+[
+% for i in range(0, cfg['nr_s1_quadrant']*cfg['s1_quadrant']['nr_clusters']):
+% for j in range(0, 8):
+    {
+        "thread": "${f'hart_{9*i+j +1}'}",
+        "roi": [
+            {"idx": 1, "label": "compute"}
+        ]
+    },
+% endfor
+    {
+        "thread": "${f'dma_{9*(i+1)}'}",
+        "roi": [
+            {"idx": 0, "label": "dma_in"},
+% for dma_i in range(0, 8):
+            {"idx": ${dma_i + 12}, "label": "dma_tile"},
+% endfor
+        ]
+    },
+% endfor
+]

@@ -4,18 +4,13 @@
     {
         "thread": "${f'hart_{9*i+j +1}'}",
         "roi": [
-            {"idx": 1, "label": "compute"}
+            {"idx": 1, "label": "${f'compute_hart_{9*i+j +1}'}"}
         ]
     },
 % endfor
     {
         "thread": "${f'dma_{9*(i+1)}'}",
-        "roi": [
-            {"idx": 0, "label": "dma_in"},
-% for dma_i in range(0, 8):
-            {"idx": ${dma_i + 12}, "label": "dma_tile"},
-% endfor
-        ]
+        "roi": "*"
     },
 % endfor
 ]

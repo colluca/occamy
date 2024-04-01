@@ -27,6 +27,6 @@ jobs:
           context: .
           file: util/container/Dockerfile
           push: true
-          tags: ghcr.io/pulp-platform/occamy:${{ github.ref_name }}
+          tags: ghcr.io/pulp-platform/occamy:latest
           build-args: |-
             SNITCH_LLVM_VERSION=latest

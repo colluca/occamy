@@ -56,7 +56,7 @@ class Occamy(Generator):
         # Overwrite boot address with base of bootrom
         self.cluster.cfg["boot_addr"] = self.cfg["peripherals"]["rom"]["address"]
 
-        self.cluster.cfg['cluster_base_expose'] = True
+        self.cluster.cfg['tie_ports'] = False
 
         if "ro_cache_cfg" in self.cfg["s1_quadrant"]:
             ro_cache = self.cfg["s1_quadrant"]["ro_cache_cfg"]

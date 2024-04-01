@@ -20,9 +20,10 @@ SIMULATORS = {
 
 def main():
     args = parser('vsim', SIMULATORS.keys()).parse_args()
-    simulations = get_simulations(args.testlist, SIMULATORS[args.simulator], run_dir=args.run_dir)
+    simulations = get_simulations(args.testlist, SIMULATORS[args.simulator])
     return run_simulations(simulations,
                            n_procs=args.n_procs,
+                           run_dir=Path(args.run_dir),
                            dry_run=args.dry_run,
                            early_exit=args.early_exit)
 

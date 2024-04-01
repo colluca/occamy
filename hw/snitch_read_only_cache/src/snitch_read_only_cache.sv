@@ -273,7 +273,7 @@ module snitch_read_only_cache #(
   );
 
   // The lookup module contains the actual cache RAMs and performs lookups.
-  snitch_icache_lookup_parallel #(
+  snitch_icache_lookup #(
     .CFG              ( CFG ),
     .sram_cfg_tag_t   ( sram_cfg_tag_t  ),
     .sram_cfg_data_t  ( sram_cfg_data_t )

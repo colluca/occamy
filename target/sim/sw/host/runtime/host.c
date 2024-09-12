@@ -211,7 +211,7 @@ static inline void wakeup_cluster(uint32_t cluster_id) {
  * @detail Send a cluster interrupt to all Snitches
  */
 static inline void wakeup_snitches() {
-#if defined(SUPPORTS_MULTICAST) && defined(USE_MULTICAST)
+#if defined(CVA6_SUPPORTS_MULTICAST) && defined(USE_MULTICAST)
     multicast_to_clusters(cluster_clint_set_addr(0), 511);
 #else
     for (int i = 0; i < N_CLUSTERS; i++) wakeup_cluster(i);
@@ -286,6 +286,9 @@ static inline void set_reset_n_quad(uint32_t quad_idx, uint32_t value) {
 
 static inline void reset_and_ungate_quad(uint32_t quadrant_idx) {
     set_reset_n_quad(quadrant_idx, 0);
+    // We need to ungate the clock for some time during reset
+    // so that the tracer cycle is initialized (see Snitch cluster tracer) 
+    set_clk_ena_quad(quadrant_idx, 1);
     set_clk_ena_quad(quadrant_idx, 0);
     set_reset_n_quad(quadrant_idx, 1);
     set_clk_ena_quad(quadrant_idx, 1);

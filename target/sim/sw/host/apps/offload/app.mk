@@ -9,5 +9,6 @@ SRC_DIR             = $(SW_DIR)/host/apps/$(APP)/src
 SRCS                = $(SRC_DIR)/main.c
 $(APP)_DEVICE_APPS  = $(SW_DIR)/device/apps/blas/axpy
 $(APP)_DEVICE_APPS += $(SW_DIR)/device/apps/blas/gemm
+$(APP)_DEVICE_APPS += $(SW_DIR)/device/apps/test_cluster_dma_mcast
 
 include $(SW_DIR)/host/apps/common.mk

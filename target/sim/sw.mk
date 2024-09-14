@@ -69,8 +69,10 @@ HOST_APPS += sw/host/apps/offload
 
 DEVICE_APPS  = sw/device/apps/blas/axpy
 DEVICE_APPS += sw/device/apps/blas/gemm
+DEVICE_APPS += sw/device/apps/blas/gemm_v2
 DEVICE_APPS += sw/device/apps/test_cluster_dma_mcast
 DEVICE_APPS += sw/device/apps/test_snitch_narrow_mcast
+DEVICE_APPS += sw/device/apps/bench_mcast
 
 # Include Makefile from each app subdirectory
 $(foreach app,$(DEVICE_APPS) $(HOST_APPS), \

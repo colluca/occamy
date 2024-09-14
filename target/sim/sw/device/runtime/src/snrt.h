@@ -19,6 +19,7 @@
 #include "cluster_interrupt_decls.h"
 #include "global_interrupt_decls.h"
 #include "memory_decls.h"
+#include "riscv_decls.h"
 #include "start_decls.h"
 #include "sync_decls.h"
 #include "team_decls.h"

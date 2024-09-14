@@ -1,0 +1,17 @@
+// Copyright 2024 ETH Zurich and University of Bologna.
+// Licensed under the Apache License, Version 2.0, see LICENSE for details.
+// SPDX-License-Identifier: Apache-2.0
+
+{
+    setup_ssr: 1,
+    m_tiles: 32, // number of tiles in M dimension (same as number of clusters)
+    n_tiles: 3, // number of tiles in N dimension
+    transa: false,
+    transb: true, // must be true for SIMD
+    M: 256, // 8 * m_tiles
+    N: 48, // 16 * n_tiles
+    K: 256,
+    alpha: 1,
+    beta: 0,
+    gemm_fp: "gemm_fp64_opt"
+}

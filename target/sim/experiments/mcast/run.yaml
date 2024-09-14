@@ -1,0 +1,207 @@
+# Copyright 2024 ETH Zurich and University of Bologna.
+# Licensed under the Apache License, Version 2.0, see LICENSE for details.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Luca Colagrande <colluca@iis.ee.ethz.ch>
+
+# Run parameters:
+# - n_clusters_to_use: number of clusters to use
+# - transfer_size: size of the transfer in KiB
+# - multicast: use multicast or not
+
+runs:
+  - n_clusters_to_use: 2
+    transfer_size: 2
+    multicast: "false"
+  - n_clusters_to_use: 2
+    transfer_size: 4
+    multicast: "false"
+  - n_clusters_to_use: 2
+    transfer_size: 8
+    multicast: "false"
+  - n_clusters_to_use: 2
+    transfer_size: 16
+    multicast: "false"
+  - n_clusters_to_use: 2
+    transfer_size: 32
+    multicast: "false"
+  - n_clusters_to_use: 4
+    transfer_size: 2
+    multicast: "false"
+  - n_clusters_to_use: 4
+    transfer_size: 4
+    multicast: "false"
+  - n_clusters_to_use: 4
+    transfer_size: 8
+    multicast: "false"
+  - n_clusters_to_use: 4
+    transfer_size: 16
+    multicast: "false"
+  - n_clusters_to_use: 4
+    transfer_size: 32
+    multicast: "false"
+  - n_clusters_to_use: 8
+    transfer_size: 2
+    multicast: "false"
+  - n_clusters_to_use: 8
+    transfer_size: 4
+    multicast: "false"
+  - n_clusters_to_use: 8
+    transfer_size: 8
+    multicast: "false"
+  - n_clusters_to_use: 8
+    transfer_size: 16
+    multicast: "false"
+  - n_clusters_to_use: 8
+    transfer_size: 32
+    multicast: "false"
+  - n_clusters_to_use: 16
+    transfer_size: 2
+    multicast: "false"
+  - n_clusters_to_use: 16
+    transfer_size: 4
+    multicast: "false"
+  - n_clusters_to_use: 16
+    transfer_size: 8
+    multicast: "false"
+  - n_clusters_to_use: 16
+    transfer_size: 16
+    multicast: "false"
+  - n_clusters_to_use: 16
+    transfer_size: 32
+    multicast: "false"
+  - n_clusters_to_use: 32
+    transfer_size: 2
+    multicast: "false"
+  - n_clusters_to_use: 32
+    transfer_size: 4
+    multicast: "false"
+  - n_clusters_to_use: 32
+    transfer_size: 8
+    multicast: "false"
+  - n_clusters_to_use: 32
+    transfer_size: 16
+    multicast: "false"
+  - n_clusters_to_use: 32
+    transfer_size: 32
+    multicast: "false"
+  - n_clusters_to_use: 2
+    transfer_size: 2
+    multicast: "true"
+  - n_clusters_to_use: 2
+    transfer_size: 4
+    multicast: "true"
+  - n_clusters_to_use: 2
+    transfer_size: 8
+    multicast: "true"
+  - n_clusters_to_use: 2
+    transfer_size: 16
+    multicast: "true"
+  - n_clusters_to_use: 2
+    transfer_size: 32
+    multicast: "true"
+  - n_clusters_to_use: 4
+    transfer_size: 2
+    multicast: "true"
+  - n_clusters_to_use: 4
+    transfer_size: 4
+    multicast: "true"
+  - n_clusters_to_use: 4
+    transfer_size: 8
+    multicast: "true"
+  - n_clusters_to_use: 4
+    transfer_size: 16
+    multicast: "true"
+  - n_clusters_to_use: 4
+    transfer_size: 32
+    multicast: "true"
+  - n_clusters_to_use: 8
+    transfer_size: 2
+    multicast: "true"
+  - n_clusters_to_use: 8
+    transfer_size: 4
+    multicast: "true"
+  - n_clusters_to_use: 8
+    transfer_size: 8
+    multicast: "true"
+  - n_clusters_to_use: 8
+    transfer_size: 16
+    multicast: "true"
+  - n_clusters_to_use: 8
+    transfer_size: 32
+    multicast: "true"
+  - n_clusters_to_use: 16
+    transfer_size: 2
+    multicast: "true"
+  - n_clusters_to_use: 16
+    transfer_size: 4
+    multicast: "true"
+  - n_clusters_to_use: 16
+    transfer_size: 8
+    multicast: "true"
+  - n_clusters_to_use: 16
+    transfer_size: 16
+    multicast: "true"
+  - n_clusters_to_use: 16
+    transfer_size: 32
+    multicast: "true"
+  - n_clusters_to_use: 32
+    transfer_size: 2
+    multicast: "true"
+  - n_clusters_to_use: 32
+    transfer_size: 4
+    multicast: "true"
+  - n_clusters_to_use: 32
+    transfer_size: 8
+    multicast: "true"
+  - n_clusters_to_use: 32
+    transfer_size: 16
+    multicast: "true"
+  - n_clusters_to_use: 32
+    transfer_size: 32
+    multicast: "true"
+  - n_clusters_to_use: 8
+    transfer_size: 2
+    multicast: "hybrid"
+  - n_clusters_to_use: 8
+    transfer_size: 4
+    multicast: "hybrid"
+  - n_clusters_to_use: 8
+    transfer_size: 8
+    multicast: "hybrid"
+  - n_clusters_to_use: 8
+    transfer_size: 16
+    multicast: "hybrid"
+  - n_clusters_to_use: 8
+    transfer_size: 32
+    multicast: "hybrid"
+  - n_clusters_to_use: 16
+    transfer_size: 2
+    multicast: "hybrid"
+  - n_clusters_to_use: 16
+    transfer_size: 4
+    multicast: "hybrid"
+  - n_clusters_to_use: 16
+    transfer_size: 8
+    multicast: "hybrid"
+  - n_clusters_to_use: 16
+    transfer_size: 16
+    multicast: "hybrid"
+  - n_clusters_to_use: 16
+    transfer_size: 32
+    multicast: "hybrid"
+  - n_clusters_to_use: 32
+    transfer_size: 2
+    multicast: "hybrid"
+  - n_clusters_to_use: 32
+    transfer_size: 4
+    multicast: "hybrid"
+  - n_clusters_to_use: 32
+    transfer_size: 8
+    multicast: "hybrid"
+  - n_clusters_to_use: 32
+    transfer_size: 16
+    multicast: "hybrid"
+  - n_clusters_to_use: 32
+    transfer_size: 32
+    multicast: "hybrid"

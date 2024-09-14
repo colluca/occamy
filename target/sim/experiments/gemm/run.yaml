@@ -1,0 +1,23 @@
+# Copyright 2024 ETH Zurich and University of Bologna.
+# Licensed under the Apache License, Version 2.0, see LICENSE for details.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Luca Colagrande <colluca@iis.ee.ethz.ch>
+
+# Run parameters:
+# - multicast: use multicast ("true"), hierarchical implementation ("hybrid") or none ("false")
+# - tile: measure performance of the first tile ("first") or steady-state tile ("steady")
+
+runs:
+  - multicast: "true"
+    tile: "first"
+  - multicast: "true"
+    tile: "steady"
+  - multicast: "false"
+    tile: "first"
+  - multicast: "false"
+    tile: "steady"
+  - multicast: "hybrid"
+    tile: "first"
+  - multicast: "hybrid"
+    tile: "steady"

@@ -698,7 +698,7 @@ def main():
                                                     "S1QuadrantCfgAddressSpace")],
                                                   is_mcast_target=enable_narrow_multicast,
                                                   forward_mcast=enable_narrow_multicast)
-        soc_narrow_xbar.add_input("s1_quadrant_{}".format(i))
+        soc_narrow_xbar.add_input("s1_quadrant_{}".format(i), is_mcast_master=enable_narrow_multicast)
 
     soc_narrow_xbar.add_input("cva6")
     soc_narrow_xbar.add_input("soc_wide")
@@ -732,9 +732,8 @@ def main():
     # We need 3 "crossbars", which are really simple muxes and demuxes
     quadrant_s1_ctrl_xbars = dict()
     for name, (iw, lm, forward_mcast) in {
-        'soc_to_quad': (soc_narrow_xbar.iw_out(), "axi_pkg::CUT_SLV_PORTS",
-                        enable_narrow_multicast),
-        'quad_to_soc': (soc_narrow_xbar.iw, "axi_pkg::CUT_MST_PORTS", False),
+        'soc_to_quad': (soc_narrow_xbar.iw_out(), "axi_pkg::CUT_SLV_PORTS", enable_narrow_multicast),
+        'quad_to_soc': (soc_narrow_xbar.iw, "axi_pkg::CUT_MST_PORTS", enable_narrow_multicast),
     }.items():
         # Reuse (preserve) narrow Xbar IDs and max transactions
         quadrant_s1_ctrl_xbars[name] = solder.AxiXbar(
@@ -830,8 +829,9 @@ def main():
                                                     f"cluster_base_addr[{i}]",
                                                     "ClusterAddressSpace",
                                                     is_mcast_target=enable_narrow_multicast,
-                                                    forward_mcast=False)
-        narrow_xbar_quadrant_s1.add_input("cluster_{}".format(i))
+                                                    forward_mcast=enable_narrow_multicast)
+        narrow_xbar_quadrant_s1.add_input("cluster_{}".format(i),
+                                          is_mcast_master=enable_narrow_multicast)
 
     wide_xbar_quadrant_s1.add_input("top", is_mcast_master=enable_wide_multicast)
     wide_xbar_quadrant_s1.add_output("top", [],
@@ -841,7 +841,7 @@ def main():
     narrow_xbar_quadrant_s1.add_input("top", is_mcast_master=enable_narrow_multicast)
     narrow_xbar_quadrant_s1.add_output("top", [],
                                        is_mcast_target=enable_narrow_multicast,
-                                       forward_mcast=False)
+                                       forward_mcast=enable_narrow_multicast)
 
     # remote downstream mux
     rmq_mux = [None]*max(nr_remote_quadrants, 1 if is_remote_quadrant else 0)

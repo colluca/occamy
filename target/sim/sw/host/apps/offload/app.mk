@@ -10,5 +10,6 @@ SRCS                = $(SRC_DIR)/main.c
 $(APP)_DEVICE_APPS  = $(SW_DIR)/device/apps/blas/axpy
 $(APP)_DEVICE_APPS += $(SW_DIR)/device/apps/blas/gemm
 $(APP)_DEVICE_APPS += $(SW_DIR)/device/apps/test_cluster_dma_mcast
+$(APP)_DEVICE_APPS += $(SW_DIR)/device/apps/test_snitch_narrow_mcast
 
 include $(SW_DIR)/host/apps/common.mk

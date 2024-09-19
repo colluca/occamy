@@ -151,11 +151,10 @@ module ${name}_quadrant_s1
     wide_cluster_out_ro_cache = wide_cluster_out_ro_cache.cut(context, cuts_widexpost_with_wideiwc_out)
     #// Change ID width, isolate, and cut
     wide_cluster_out_cut = wide_cluster_out_ro_cache \
-      .change_iw(context, wide_target_iw, "wide_cluster_out_iwc", max_txns_per_id=wide_trans) \
       .isolate(context, "isolate[3]", "wide_cluster_out_isolate", isolated="isolated[3]", atop_support=False, to_clk="clk_i", to_rst="rst_ni", use_to_clk_rst=True, num_pending=wide_trans) \
       .cut(context, cuts_wideiwc_with_wideout)
     #// Assert correct outgoing ID widths
-    assert quadrant_pre_xbars[0].in_quadrant.iw == wide_cluster_out_cut.iw, "S1 Quadrant and SoC IW mismatches."
+    assert quadrant_pre_xbars[0].in_quadrant.iw == wide_cluster_out_cut.iw, f"S1 Quadrant and SoC IW mismatches. {quadrant_pre_xbars[0].in_quadrant.iw} != {wide_cluster_out_cut.iw}"
   %>
 
   assign quadrant_wide_out_req_o = ${wide_cluster_out_cut.req_name()};

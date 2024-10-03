@@ -19,10 +19,10 @@ packages:
       Git: https://github.com/pulp-platform/apb_uart.git
     dependencies: []
   axi:
-    revision: 587355b77b8ce94dcd600efbd5d5bd118ff913a7
-    version: 0.39.4
+    revision: bec548fa2a9b18cbd7531105bb1fdf481ea8ad49
+    version: null
     source:
-      Git: https://github.com/pulp-platform/axi.git
+      Git: https://github.com/colluca/axi.git
     dependencies:
     - common_cells
     - common_verification
@@ -72,8 +72,8 @@ packages:
     - scm
     - tech_cells_generic
   common_cells:
-    revision: c27bce39ebb2e6bae52f60960814a2afca7bd4cb
-    version: 1.37.0
+    revision: 0fd2ba32926c0360534dc3d5795143cb259abb1c
+    version: null
     source:
       Git: https://github.com/pulp-platform/common_cells.git
     dependencies:
@@ -111,10 +111,10 @@ packages:
     dependencies:
     - common_cells
   idma:
-    revision: 1a42da9d5c76f1cff0bcdaaacc474ed85631d734
+    revision: 92b134906552222d87a24cc4ae04974c832d1f68
     version: null
     source:
-      Git: https://github.com/pulp-platform/iDMA
+      Git: https://github.com/colluca/iDMA.git
     dependencies:
     - axi
     - axi_stream
@@ -163,10 +163,10 @@ packages:
       Git: https://github.com/pulp-platform/scm.git
     dependencies: []
   snitch_cluster:
-    revision: 26aae5c1dd4277a83a4271a49d86c51002afd852
+    revision: 5552130bafe3d8fe26817b5df1f2986daff55e10
     version: null
     source:
-      Git: https://github.com/pulp-platform/snitch_cluster.git
+      Git: https://github.com/colluca/snitch_cluster.git
     dependencies:
     - axi
     - axi_riscv_atomics

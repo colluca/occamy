@@ -31,3 +31,31 @@ The following files are released under Apache License 2.0 (`Apache-2.0`) see `LI
 The following files are released under Solderpad v0.51 (`SHL-0.51`) see `hw/LICENSE`:
 
 - `hw/`
+
+## Publications
+
+<!--start-publications-->
+
+If you use Occamy in your work, you can cite us:
+
+<details>
+<summary><b><a href="https://doi.org/10.1109/VLSITechnologyandCir46783.2024.10631529">Occamy: A 432-Core 28.1 DP-GFLOP/s/W 83% FPU Utilization Dual-Chiplet, Dual-HBM2E RISC-V-Based Accelerator for Stencil and Sparse Linear Algebra Computations with 8-to-64-bit Floating-Point Support in 12nm FinFET</a></a></b></summary>
+<p>
+
+```
+@INPROCEEDINGS{paulin2024occamy,
+  author={Paulin, Gianna and Scheffler, Paul and Benz, Thomas and Cavalcante, Matheus and Fischer, Tim and Eggimann, Manuel and Zhang, Yichao and Wistoff, Nils and Bertaccini, Luca and Colagrande, Luca and Ottavi, Gianmarco and Gürkaynak, Frank K. and Rossi, Davide and Benini, Luca},
+  booktitle={2024 IEEE Symposium on VLSI Technology and Circuits (VLSI Technology and Circuits)}, 
+  title={Occamy: A 432-Core 28.1 DP-GFLOP/s/W 83% FPU Utilization Dual-Chiplet, Dual-HBM2E RISC-V-Based Accelerator for Stencil and Sparse Linear Algebra Computations with 8-to-64-bit Floating-Point Support in 12nm FinFET}, 
+  year={2024},
+  volume={},
+  number={},
+  pages={1-2},
+  doi={10.1109/VLSITechnologyandCir46783.2024.10631529}
+}
+```
+
+</p>
+</details>
+
+<!--end-publications-->

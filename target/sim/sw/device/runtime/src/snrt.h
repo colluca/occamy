@@ -31,6 +31,7 @@
 #include "dma.h"
 #include "dump.h"
 #include "global_interrupts.h"
+#include "mcast.h"
 #include "occamy_device.h"
 #include "occamy_memory.h"
 #include "occamy_start.h"

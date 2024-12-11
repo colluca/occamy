@@ -211,7 +211,7 @@ static inline void wakeup_cluster(uint32_t cluster_id) {
  * @detail Send a cluster interrupt to all Snitches
  */
 static inline void wakeup_snitches() {
-#if defined(SUPPORTS_MULTICAST) && defined(USE_MULTICAST)
+#if defined(CVA6_SUPPORTS_MULTICAST) && defined(USE_MULTICAST)
     multicast_to_clusters(cluster_clint_set_addr(0), 511);
 #else
     for (int i = 0; i < N_CLUSTERS; i++) wakeup_cluster(i);

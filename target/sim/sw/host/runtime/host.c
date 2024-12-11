@@ -286,6 +286,9 @@ static inline void set_reset_n_quad(uint32_t quad_idx, uint32_t value) {
 
 static inline void reset_and_ungate_quad(uint32_t quadrant_idx) {
     set_reset_n_quad(quadrant_idx, 0);
+    // We need to ungate the clock for some time during reset
+    // so that the tracer cycle is initialized (see Snitch cluster tracer)
+    set_clk_ena_quad(quadrant_idx, 1);
     set_clk_ena_quad(quadrant_idx, 0);
     set_reset_n_quad(quadrant_idx, 1);
     set_clk_ena_quad(quadrant_idx, 1);

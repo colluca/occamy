@@ -63,7 +63,7 @@ def transfer_time(mcast, nr_clusters, size):
 
 
 def gemm_time(mcast, tile):
-    runs = Path('../gemm/runs')
+    runs = Path('../gemm/runs.bak')
     axes = [tile, common.get_mcast_prefix(mcast)]
     start = []
     end = []
@@ -104,7 +104,7 @@ def plot1(export=False):
 
     # Plot data
     df = pd.DataFrame(area)
-    ax = df.plot(kind='bar', figsize=(10, 6))
+    ax = df.plot(kind='bar', figsize=(10, 6), width=0.75)
 
     # Add area increase labels on top of each cluster
     area_increase = [area['Multicast'][noslvmst]/area['Baseline'][noslvmst] for noslvmst in all_noslvmst]
@@ -136,9 +136,9 @@ def plot1(export=False):
     else:
         file = RESULTS_DIR / 'plot1.pdf'
         file.parent.mkdir(parents=True, exist_ok=True)
-        plt.gcf().set_size_inches(0.28*IEEE_TEXT_WIDTH, 0.10 * A4_HEIGHT)
+        plt.gcf().set_size_inches(0.22*IEEE_TEXT_WIDTH, 0.10 * A4_HEIGHT)
         plt.gcf().subplots_adjust(
-            left=0.18,
+            left=0.23,
             bottom=0.25,
             right=1,
             top=1
@@ -152,9 +152,11 @@ def plot1(export=False):
     # Return metrics
     return {
         'EightByEightCrossbarOverheadkGE': '{:.1f}'.format(area['Multicast'][8] - area['Baseline'][8]),
-        'EightByEightCrossbarOverheadPercent': '{:.1f}'.format(100 * (area['Multicast'][8] - area['Baseline'][8]) / area['Baseline'][8]),
+        'EightByEightCrossbarOverheadPercent': '{:.0f}'.format(100 * (area['Multicast'][8] - area['Baseline'][8]) / area['Baseline'][8]),
+        'SixteenBySixteenCrossbarOverheadkGE': '{:.1f}'.format(area['Multicast'][16] - area['Baseline'][16]),
+        'SixteenBySixteenCrossbarOverheadPercent': '{:.0f}'.format(100 * (area['Multicast'][16] - area['Baseline'][16]) / area['Baseline'][16]),
         'AsymptoticOverheadPercent': '{:.1f}'.format(100 * (mcast_coefficients[0] / base_coefficients[0] - 1)),
-        'SixteenBySixteenCrossbarFrequencyOverheadPercent': '{:.1f}'.format(100 * (1 - freq['Multicast'][16] / freq['Baseline'][16])),
+        'SixteenBySixteenCrossbarFrequencyOverheadPercent': '{:.0f}'.format(100 * (1 - freq['Multicast'][16] / freq['Baseline'][16])),
     }
 
 
@@ -182,7 +184,7 @@ def plot2(export=False):
     df.rename(columns=lambda x: str(x) + '\,KiB', inplace=True)
 
     # Plot speedup bars over baseline
-    ax = df.plot(kind='bar', figsize=(10, 6), width=0.7)
+    ax = df.plot(kind='bar', figsize=(10, 6), width=0.75)
 
     # Add parallel fraction labels on top of every third bar
     # and superimpose speedup bars over hybrid for 8, 16 and 32 clusters
@@ -230,9 +232,9 @@ def plot2(export=False):
     else:
         file = RESULTS_DIR / 'plot2.pdf'
         file.parent.mkdir(parents=True, exist_ok=True)
-        plt.gcf().set_size_inches(0.34*IEEE_TEXT_WIDTH, 0.10 * A4_HEIGHT)
+        plt.gcf().set_size_inches(0.28*IEEE_TEXT_WIDTH, 0.10 * A4_HEIGHT)
         plt.gcf().subplots_adjust(
-            left=0.13,
+            left=0.15,
             bottom=0.25,
             right=1,
             top=1
@@ -243,9 +245,9 @@ def plot2(export=False):
     geomean_speedup = geometric_mean([mcast_speedup[size][32]/hybrid_speedup[size][32] for size in ALL_TRANSFER_SIZES])
     return {
         'ThirtyTwoClusterEightKiBParallelFraction': '{:.0f}'.format(100*pfrac[8][32]),
-        'ThirtyTwoClusterTwoKiBSpeedup': '{:.2f}'.format(mcast_speedup[2][32]),
-        'ThirtyTwoClusterThirtyTwoKiBSpeedup': '{:.2f}'.format(mcast_speedup[32][32]),
-        'ThirtyTwoClusterGeometricMeanSpeedup': '{:.2f}'.format(geomean_speedup),
+        'ThirtyTwoClusterTwoKiBSpeedup': '{:.1f}'.format(mcast_speedup[2][32]),
+        'ThirtyTwoClusterThirtyTwoKiBSpeedup': '{:.1f}'.format(mcast_speedup[32][32]),
+        'ThirtyTwoClusterGeometricMeanSpeedup': '{:.1f}'.format(geomean_speedup),
     }
 
 
@@ -380,9 +382,9 @@ def plot3(export=False):
     else:
         file = RESULTS_DIR / 'plot3.pdf'
         file.parent.mkdir(parents=True, exist_ok=True)
-        plt.gcf().set_size_inches(0.34*IEEE_TEXT_WIDTH, 0.10 * A4_HEIGHT)
+        plt.gcf().set_size_inches(0.28*IEEE_TEXT_WIDTH, 0.10 * A4_HEIGHT)
         plt.gcf().subplots_adjust(
-            left=0.15,
+            left=0.18,
             bottom=0.25,
             right=1,
             top=1
@@ -394,10 +396,10 @@ def plot3(export=False):
         'BaselineTileNOperationalIntensity': '{:.1f}'.format(ss_base_oi),
         'BaselineTileNPerformanceGFLOPS': '{:.1f}'.format(ss_base_perf),
         'BaselineTileNPerformancePercentage': '{:.0f}'.format(100 * ss_base_perf / (ss_base_oi * peak_memory_bandwidth)),
-        'HybridTileNOperationalIntensityIncrease': '{:.2f}'.format(ss_hybrid_oi / ss_base_oi),
-        'HybridTileNPerformanceIncrease': '{:.2f}'.format(ss_hybrid_perf / ss_base_perf),
-        'MulticastTileNOperationalIntensityIncrease': '{:.2f}'.format(ss_mcast_oi / ss_base_oi),
-        'MulticastTileNPerformanceIncrease': '{:.2f}'.format(ss_mcast_perf / ss_base_perf),
+        'HybridTileNOperationalIntensityIncrease': '{:.1f}'.format(ss_hybrid_oi / ss_base_oi),
+        'HybridTileNPerformanceIncrease': '{:.1f}'.format(ss_hybrid_perf / ss_base_perf),
+        'MulticastTileNOperationalIntensityIncrease': '{:.1f}'.format(ss_mcast_oi / ss_base_oi),
+        'MulticastTileNPerformanceIncrease': '{:.1f}'.format(ss_mcast_perf / ss_base_perf),
         'MulticastTileNPerformanceIncreaseOverHybridPercentage': '{:.0f}'.format(100 * (ss_mcast_perf / ss_hybrid_perf - 1)),
         'MulticastTileNPerformanceGFLOPS': '{:.1f}'.format(ss_mcast_perf),
     }

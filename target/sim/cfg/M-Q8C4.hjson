@@ -361,7 +361,7 @@
     },
     spm_wide: {
       address: 1895825408, // 0x7100_0000
-      length: 1048576, // 1 MiB 0x10_0000
+      length: 4194304, // 4 MiB 0x40_0000
     },
     wide_zero_mem: {
       address: 4294967296, // 0x1_0000_0000

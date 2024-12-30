@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 overrides:
-  axi:                { git: https://github.com/colluca/axi.git, rev: feature/multicast-xbar }
+  axi:                { git: https://github.com/colluca/axi.git, rev: multicast }
   snitch_cluster:     { git: https://github.com/colluca/snitch_cluster.git, rev: multicast }
-  idma:               { git: https://github.com/colluca/iDMA.git, rev: __deploy__6e7ecfc__multicast-xbar }
-  common_cells:       { git: https://github.com/pulp-platform/common_cells.git, rev: multicast-xbar }
+  idma:               { git: https://github.com/colluca/iDMA.git, rev: __deploy__6e7ecfc__multicast }
+  common_cells:       { git: https://github.com/colluca/common_cells.git, rev: multicast }
   register_interface: { git: https://github.com/pulp-platform/register_interface.git, version: 0.4.2 }

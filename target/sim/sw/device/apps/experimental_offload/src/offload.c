@@ -20,6 +20,7 @@ __thread uint32_t remote_job_addr;
 #include "atax/src/atax.h"
 #include "correlation/src/correlation.h"
 #include "covariance/src/covariance.h"
+#include "bfs/src/bfs.h"
 
 // Job function type
 typedef void (*job_func_t)(void* args);
@@ -32,7 +33,8 @@ __thread job_func_t jobs[N_JOB_TYPES] = {
     kmeans_iteration_job,
     atax_job,
     correlation_job,
-    covariance_job
+    covariance_job,
+    bfs_job
 };
 
 static inline void run_job() {

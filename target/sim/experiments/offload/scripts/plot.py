@@ -50,6 +50,7 @@ def get_app_label(app):
         'atax': 'ATAX',
         'covariance': 'Covariance',
         'correlation': 'Correlation',
+        'bfs': 'BFS',
     }
     return APP_LABELS[app]
 
@@ -324,21 +325,35 @@ def fig8v2(sizes, export=False):
     df = pd.DataFrame(data)
     df.rename(columns=get_app_label, inplace=True)
 
-    # Customize plot
+    # Plot bars
     ax = df.plot(kind='bar', figsize=(10, 6), width=0.7, linewidth=0.5, edgecolor='black')
+
+    # Mark average bar height per group
+    bar_positions = []
+    average_heights = []
+    for i, index in enumerate(df.index):
+        group_heights = df.loc[index].values
+        bar_positions.append(i)
+        average_heights.append(np.mean(group_heights))
+    ax.plot(
+        bar_positions,
+        average_heights,
+        color='black',
+        marker='*',
+        markerfacecolor='white',
+        markeredgewidth=0.5,
+        linestyle='--',
+        linewidth=0.5,
+        label='Average'
+    )
+
+    # Customize plot
     ax.set_xlabel('Nr. clusters')
     ax.set_ylabel('Offloading overhead [ns]')
     ax.legend()
     ax.set_axisbelow(True)
     ax.grid(color='gainsboro', which='both', axis='y', linewidth=0.5)
     ax.tick_params(axis='x', labelrotation=0)
-
-    # # Add custom labels on top of each bar
-    # for i, p in enumerate(ax.patches):
-    #     ax.annotate(f'{perc[i]:.0f}%', 
-    #                 (p.get_x() + p.get_width() / 2., p.get_height()), 
-    #                 ha='center', va='center', xytext=(0, 10), 
-    #                 textcoords='offset points')
 
     # Extend range of y axis to make bar labels visible
     ylim = ax.get_ylim()
@@ -352,11 +367,13 @@ def fig8v2(sizes, export=False):
 
     # Get relevant plot figures
     single_cluster_overheads = [data[app][1] for app in apps]
+    thirty_two_cluster_overheads = [data[app][32] for app in apps]
     matmul_overheads = [data['gemm'][nr_clusters] for nr_clusters in ALL_NR_CLUSTER_CFGS]
     figs = {
         'OverheadSingleClusterMean': '{:.0f}'.format(np.mean(single_cluster_overheads)),
         'OverheadSingleClusterStddev': '{:.0f}'.format(np.std(single_cluster_overheads)),
         'OverheadMatmulMax': '{:.0f}'.format(np.max(matmul_overheads)),
+        'OverheadThirtyTwoClusterStddev': '{:.0f}'.format(np.std(thirty_two_cluster_overheads)),
     }
     return figs
 
@@ -429,16 +446,16 @@ def fig9v2(sizes, export):
 
     # Get relevant plot figures
     gemm_ideal_speedups = [ideal[nr_clusters]['gemm'] for nr_clusters in ALL_NR_CLUSTER_CFGS]
-    cov_ideal_speedups = [ideal[nr_clusters]['covariance'] for nr_clusters in ALL_NR_CLUSTER_CFGS]
+    bfs_ideal_speedups = [ideal[nr_clusters]['bfs'] for nr_clusters in ALL_NR_CLUSTER_CFGS]
     axpy_mc_matmul_perc = [perc_dict[nr_clusters][app] for nr_clusters in ALL_NR_CLUSTER_CFGS for app in ['axpy', 'montecarlo', 'gemm']]
-    atax_cov_perc = [perc_dict[nr_clusters][app] for nr_clusters in ALL_NR_CLUSTER_CFGS for app in ['atax', 'covariance']]
+    atax_cov_bfs_perc = [perc_dict[nr_clusters][app] for nr_clusters in ALL_NR_CLUSTER_CFGS for app in ['atax', 'covariance', 'bfs']]
     figs = {
         'IdealSpeedupMatmulMax': '{:.2f}'.format(np.max(gemm_ideal_speedups)),
-        'IdealSpeedupCovarianceMax': '{:.2f}'.format(np.max(cov_ideal_speedups)),
+        'IdealSpeedupBFSMax': '{:.2f}'.format(np.max(bfs_ideal_speedups)),
         'IdealSpeedupFractionAXPYMonteCarloMatmulMin': '{:.0f}'.format(np.min(axpy_mc_matmul_perc)),
         'IdealSpeedupFractionAXPYMonteCarloMatmulMax': '{:.0f}'.format(np.max(axpy_mc_matmul_perc)),
-        'IdealSpeedupFractionATAXCovarianceMin': '{:.0f}'.format(np.min(atax_cov_perc)),
-        'IdealSpeedupFractionATAXCovarianceMax': '{:.0f}'.format(np.max(atax_cov_perc)),
+        'IdealSpeedupFractionATAXCovarianceBFSMin': '{:.0f}'.format(np.min(atax_cov_bfs_perc)),
+        'IdealSpeedupFractionATAXCovarianceBFSMax': '{:.0f}'.format(np.max(atax_cov_bfs_perc)),
     }
     return figs
 
@@ -927,6 +944,7 @@ def main():
             'atax': {'M': 1, 'N': 256},
             'covariance': {'M': 1, 'N': 256},
             'gemm': {'M': 256, 'N': 1},
+            'bfs': {'L': 1024},
         }
         metrics.update(fig8v2(sizes, export))
     if plot == 'fig9v2' or plot == 'all':
@@ -936,6 +954,7 @@ def main():
             'gemm': {'M': 256, 'N': 1},
             'atax': {'M': 1, 'N': 256},
             'covariance': {'M': 1, 'N': 256},
+            'bfs': {'L': 1024},
         }
         metrics.update(fig9v2(sizes, export))
     if plot == 'fig10' or plot == 'all':

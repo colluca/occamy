@@ -20,6 +20,7 @@ DEVICE_APPS  = blas/axpy
 DEVICE_APPS += blas/gemm
 DEVICE_APPS += kmeans
 DEVICE_APPS += mcast
+DEVICE_APPS += bfs
 
 # Compiler toolchain
 RISCV_CC      = riscv64-unknown-elf-gcc

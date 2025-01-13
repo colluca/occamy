@@ -31,6 +31,8 @@ typedef enum { FP64 = 8, FP32 = 4, FP16 = 2, FP8 = 1 } precision_t;
 #include "covariance/data/data.h"
 #elif defined(OFFLOAD_MONTECARLO)
 #include "montecarlo/pi_estimation/data/data.h"
+#elif defined(OFFLOAD_BFS)
+#include "bfs/data/data.h"
 #endif
 
 #ifdef OFFLOAD_KMEANS
@@ -259,6 +261,42 @@ static inline void send_job_and_wakeup(job_t *job, uint64_t l1_job_ptr) {
 #endif
             break;
         }
+        case J_BFS: {
+            bfs_args_t args = job->args.bfs;
+
+#if defined(SUPPORTS_MULTICAST) && defined(USE_MULTICAST)
+            uint64_t mask = ((n_clusters_to_use - 1) << 18);
+            enable_multicast(mask);
+#endif
+            *((volatile uint64_t *)(l1_job_ptr)) = job->id;
+            *((volatile uint8_t *)(l1_job_ptr + offsetof(job_t, offload_id))) =
+                job->offload_id;
+            *((volatile uint32_t *)(l1_job_ptr + offsetof(job_t, args) +
+                                    offsetof(bfs_args_t, num_vertices))) = args.num_vertices;
+            *((volatile uint32_t *)(l1_job_ptr + offsetof(job_t, args) +
+                                    offsetof(bfs_args_t, load_graph))) = args.load_graph;
+            *((volatile uint64_t *)(l1_job_ptr + offsetof(job_t, args) +
+                                    offsetof(bfs_args_t, graph_offsets_addr))) = args.graph_offsets_addr;
+            *((volatile uint64_t *)(l1_job_ptr + offsetof(job_t, args) +
+                                    offsetof(bfs_args_t, graph_adjacencies_addr))) = args.graph_adjacencies_addr;
+            *((volatile uint64_t *)(l1_job_ptr + offsetof(job_t, args) +
+                                    offsetof(bfs_args_t, frontier_addr))) = args.frontier_addr;
+            *((volatile uint64_t *)(l1_job_ptr + offsetof(job_t, args) +
+                                    offsetof(bfs_args_t, dist_addr))) = args.dist_addr;
+            *((volatile uint64_t *)(l1_job_ptr + offsetof(job_t, args) +
+                                    offsetof(bfs_args_t, out_frontier_addr))) = args.out_frontier_addr;
+            *((volatile uint64_t *)(l1_job_ptr + offsetof(job_t, args) +
+                                    offsetof(bfs_args_t, out_dist_addr))) = args.out_dist_addr;
+
+            mcycle();  // Wakeup
+#if defined(SUPPORTS_MULTICAST) && defined(USE_MULTICAST)
+            *((volatile uint32_t *)cluster_clint_set_addr(0)) = 511;
+            disable_multicast();
+#else
+            wakeup_snitches();
+#endif
+            break;
+        }
     }
 }
 
@@ -343,6 +381,31 @@ int main() {
     job_args.covariance = covariance_args;
     job_t covariance = {J_COVARIANCE, 0, job_args};
     job_t jobs[N_JOBS] = {covariance, covariance};
+#elif defined(OFFLOAD_BFS)
+    bfs_args_t bfs_first_iter_args = {num_vertices,
+                                      1,
+                                      WIDE_SPM_ADDR((uint64_t)offsets),
+                                      WIDE_SPM_ADDR((uint64_t)adjacencies),
+                                      WIDE_SPM_ADDR((uint64_t)frontier),
+                                      WIDE_SPM_ADDR((uint64_t)dist),
+                                      WIDE_SPM_ADDR((uint64_t)out_frontier),
+                                      WIDE_SPM_ADDR((uint64_t)out_dist)};
+    bfs_args_t bfs_succ_iter_args = {num_vertices,
+                                     0,
+                                     WIDE_SPM_ADDR((uint64_t)offsets),
+                                     WIDE_SPM_ADDR((uint64_t)adjacencies),
+                                     WIDE_SPM_ADDR((uint64_t)frontier),
+                                     WIDE_SPM_ADDR((uint64_t)dist),
+                                     WIDE_SPM_ADDR((uint64_t)out_frontier),
+                                     WIDE_SPM_ADDR((uint64_t)out_dist)};
+    job_args_t first_job_args, succ_job_args;
+    first_job_args.bfs = bfs_first_iter_args;
+    succ_job_args.bfs = bfs_succ_iter_args;
+    job_t first_iter_bfs = {J_BFS, 0, first_job_args};
+    job_t succ_iter_bfs = {J_BFS, 0, succ_job_args};
+    job_t jobs[N_JOBS];
+    jobs[0] = first_iter_bfs;
+    for (uint32_t i = 1; i < N_JOBS; i++) jobs[i] = succ_iter_bfs;
 #endif
 
     volatile uint32_t n_jobs = N_JOBS;
@@ -415,6 +478,12 @@ int main() {
     // Copy results from wide SPM to DRAM for verification
     sys_dma_blk_memcpy((uint64_t)cov, WIDE_SPM_ADDR((uint64_t)cov),
                        M * M * sizeof(double));
+#elif defined(OFFLOAD_BFS)
+    // Copy results from wide SPM to DRAM for verification
+    sys_dma_blk_memcpy((uint64_t)out_frontier, WIDE_SPM_ADDR((uint64_t)out_frontier),
+                       num_vertices / 8);
+    sys_dma_blk_memcpy((uint64_t)out_dist, WIDE_SPM_ADDR((uint64_t)out_dist),
+                       num_vertices * sizeof(int32_t));
 #endif
 
     // Exit routine

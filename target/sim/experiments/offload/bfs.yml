@@ -1,0 +1,153 @@
+# Copyright 2024 ETH Zurich and University of Bologna.
+# Licensed under the Apache License, Version 2.0, see LICENSE for details.
+# SPDX-License-Identifier: Apache-2.0
+#
+# Luca Colagrande <colluca@iis.ee.ethz.ch>
+
+runs:
+# Strong scaling
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 1
+    multicast: false
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 2
+    multicast: false
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 4
+    multicast: false
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 8
+    multicast: false
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 16
+    multicast: false
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 32
+    multicast: false
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 1
+    multicast: true
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 2
+    multicast: true
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 4
+    multicast: true
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 8
+    multicast: true
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 16
+    multicast: true
+  - app: bfs
+    n_samples: 1024
+    n_clusters_to_use: 32
+    multicast: true
+# #
+#   - app: bfs
+#     n_samples: 128
+#     n_clusters_to_use: 4
+#     multicast: false
+#   - app: bfs
+#     n_samples: 256
+#     n_clusters_to_use: 4
+#     multicast: false
+#   - app: bfs
+#     n_samples: 512
+#     n_clusters_to_use: 4
+#     multicast: false
+#   - app: bfs
+#     n_samples: 256
+#     n_clusters_to_use: 8
+#     multicast: false
+#   - app: bfs
+#     n_samples: 512
+#     n_clusters_to_use: 8
+#     multicast: false
+#   - app: bfs
+#     n_samples: 1024
+#     n_clusters_to_use: 8
+#     multicast: false
+#   - app: bfs
+#     n_samples: 512
+#     n_clusters_to_use: 16
+#     multicast: false
+#   - app: bfs
+#     n_samples: 1024
+#     n_clusters_to_use: 16
+#     multicast: false
+#   - app: bfs
+#     n_samples: 2048
+#     n_clusters_to_use: 16
+#     multicast: false
+#   - app: bfs
+#     n_samples: 1024
+#     n_clusters_to_use: 32
+#     multicast: false
+  # - app: bfs
+  #   n_samples: 2048
+  #   n_clusters_to_use: 32
+  #   multicast: false
+  # - app: bfs
+  #   n_samples: 4096
+  #   n_clusters_to_use: 32
+  #   multicast: false
+  # - app: bfs
+  #   n_samples: 128
+  #   n_clusters_to_use: 4
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 256
+  #   n_clusters_to_use: 4
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 512
+  #   n_clusters_to_use: 4
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 256
+  #   n_clusters_to_use: 8
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 512
+  #   n_clusters_to_use: 8
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 1024
+  #   n_clusters_to_use: 8
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 512
+  #   n_clusters_to_use: 16
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 1024
+  #   n_clusters_to_use: 16
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 2048
+  #   n_clusters_to_use: 16
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 1024
+  #   n_clusters_to_use: 32
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 2048
+  #   n_clusters_to_use: 32
+  #   multicast: true
+  # - app: bfs
+  #   n_samples: 4096
+  #   n_clusters_to_use: 32
+  #   multicast: true

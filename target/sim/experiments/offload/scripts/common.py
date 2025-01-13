@@ -11,7 +11,7 @@ def get_mcast_prefix(mcast):
 
 def get_data_cfg_prefix(test):
     app = test['app']
-    if app in ['kmeans', 'montecarlo']:
+    if app in ['kmeans', 'montecarlo', 'bfs']:
         return f'L{test["n_samples"]}'
     elif app in ['gemm', 'correlation', 'covariance', 'atax']:
         return f'M{test["M"]}/N{test["N"]}'

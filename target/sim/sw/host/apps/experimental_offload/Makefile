@@ -47,6 +47,10 @@ ifeq ($(OFFLOAD),montecarlo)
 include $(APPS_DIR)/montecarlo/pi_estimation/Makefile
 endif
 
+ifeq ($(OFFLOAD),bfs)
+include $(APPS_DIR)/bfs/Makefile
+endif
+
 include ../common.mk
 
 ifneq ($(OFFLOAD),mc)

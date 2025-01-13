@@ -8,6 +8,7 @@
 #include "atax/src/args.h"
 #include "correlation/src/args.h"
 #include "covariance/src/args.h"
+#include "bfs/src/args.h"
 
 typedef struct {
     volatile uint32_t local_job_addr;
@@ -115,6 +116,16 @@ typedef struct {
     covariance_args_t args;
 } covariance_job_t;
 
+/////////
+// BFS //
+/////////
+
+typedef struct {
+    uint32_t id;
+    uint8_t offload_id;
+    bfs_args_t args;
+} bfs_job_t;
+
 /////////////
 // Generic //
 /////////////
@@ -131,6 +142,7 @@ typedef union {
     atax_args_t atax;
     correlation_args_t correlation;
     covariance_args_t covariance;
+    bfs_args_t bfs;
 } job_args_t;
 
 typedef struct {
@@ -139,7 +151,7 @@ typedef struct {
     job_args_t args;
 } job_t;
 
-#define N_JOB_TYPES 7
+#define N_JOB_TYPES 8
 typedef enum {
     J_AXPY = 0,
     J_GEMM = 1,
@@ -147,7 +159,8 @@ typedef enum {
     J_KMEANS = 3,
     J_ATAX = 4,
     J_CORRELATION = 5,
-    J_COVARIANCE = 6
+    J_COVARIANCE = 6,
+    J_BFS = 7
 } job_id_t;
 
 static inline uint32_t job_args_size(job_id_t job_id) {
@@ -166,6 +179,8 @@ static inline uint32_t job_args_size(job_id_t job_id) {
         return sizeof(correlation_args_t);
     case J_COVARIANCE:
         return sizeof(covariance_args_t);
+    case J_BFS:
+        return sizeof(bfs_args_t);
     default:
         return 0;
     }

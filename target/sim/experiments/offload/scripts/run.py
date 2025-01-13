@@ -188,7 +188,7 @@ def get_tests(testlist, run_dir, hw_cfg):
             RISCV_CFLAGS=cflags,
             SECTION=".wide_spm",
             OFFLOAD=app)
-        if app in ['axpy', 'gemm', 'atax', 'correlation', 'covariance', 'montecarlo']:
+        if app in ['axpy', 'gemm', 'atax', 'correlation', 'covariance', 'montecarlo', 'bfs']:
             data_cfg = get_data_cfg(test)
             env = extend_environment(env, DATA_CFG=data_cfg)
         elif app == 'kmeans':
@@ -204,10 +204,10 @@ def get_tests(testlist, run_dir, hw_cfg):
         if app in ['axpy', 'gemm']:
             verify_py = str(SNITCH_DIR / f'sw/blas/{app}/scripts/verify.py')
             test['cmd'] = [verify_py, str(sim_bin), str(elf)]
-        elif app in ['kmeans', 'atax', 'correlation', 'covariance']:
+        elif app in ['kmeans', 'atax', 'correlation', 'covariance', 'bfs']:
             verify_py = str(SNITCH_DIR / f'sw/apps/{app}/scripts/verify.py')
             test['cmd'] = [verify_py, str(sim_bin), str(elf)]
-            if app == 'kmeans':
+            if app in ['kmeans', 'bfs']:
                 test['cmd'].append('--no-gui')
         test['run_dir'] = unique_run_dir
         test['env'] = env

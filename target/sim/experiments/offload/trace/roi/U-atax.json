@@ -1,0 +1,56 @@
+[
+    // CVA6 core
+    {
+        "thread": "hart_0",
+        "roi": [
+            // Iteration 2
+            {"idx": 5, "label": "A"},
+            {"idx": 6, "label": "B"},
+            {"idx": 8, "label": "I"}
+        ]
+    },
+
+// Snitch clusters
+% for i in range(0, 16):
+
+    // DMA cores
+    {
+        "thread": "${f'hart_{1 + 9*i + 8}'}",
+        "roi": [
+            // Iteration 2
+            {"idx": 10, "label": "B"},
+            {"idx": 11, "label": "C"},
+            {"idx": 12, "label": "D"},
+            {"idx": 13, "label": "E"},
+            {"idx": 14, "label": "F"},
+            {"idx": 15, "label": "G"},
+            {"idx": 16, "label": "H"}
+        ]
+    },
+
+    // // DMA engine proper
+    // % if i == 0:
+    // {
+    //     "thread": "${f'dma_{1 + 9*i + 8}'}",
+    //     "roi": [
+    //         // Iteration 2
+    //         {"idx": -3, "label": "A in"},
+    //         {"idx": -2, "label": "x in"},
+    //         {"idx": -1, "label": "y out"},
+    //     ]
+    // },
+    // % else:
+    // {
+    //     "thread": "${f'dma_{1 + 9*i + 8}'}",
+    //     "roi": [
+    //         // Iteration 2
+    //         {"idx": -4, "label": "job info"},
+    //         {"idx": -3, "label": "A in"},
+    //         {"idx": -2, "label": "x in"},
+    //         {"idx": -1, "label": "y out"},
+    //     ]
+    // },
+    // % endif
+
+% endfor
+]
